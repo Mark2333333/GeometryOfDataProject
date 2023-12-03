@@ -26,11 +26,11 @@ def modified_hausdorff_distance(coord_seq1, coord_seq2):
 
 
 # examples_h_dis
-contour1 = [(1, 2), (2, 3), (3, 4), (4, 5)]
-contour2 = [(1, 2), (2, 3), (4, 5), (5, 6)]
+# contour1 = [(1, 2), (2, 3), (3, 4), (4, 5)]
+# contour2 = [(1, 2), (2, 3), (4, 5), (5, 6)]
 
-distance = modified_hausdorff_distance(contour1, contour2)
-print("Modified Hausdorff Distance:", distance)
+# distance = modified_hausdorff_distance(contour1, contour2)
+# print("Modified Hausdorff Distance:", distance)
 
 def euclidean_distance(p1, p2):
     return np.linalg.norm(np.array(p1) - np.array(p2))
@@ -59,11 +59,11 @@ def frechet_distance(p, q):
     return c_frechet_distance(p, q, len_p, len_q, memo)
 
 # examples_fre_dis：
-contour1 = [(0, 0), (1, 1), (2, 2), (3, 3)]
-contour2 = [(0, 1), (1, 2), (2, 3), (3, 4)]
+# contour1 = [(0, 0), (1, 1), (2, 2), (3, 3)]
+# contour2 = [(0, 1), (1, 2), (2, 3), (3, 4)]
 
-frechet_dist = frechet_distance(contour1, contour2)
-print("Frechet Distance:", frechet_dist)
+# frechet_dist = frechet_distance(contour1, contour2)
+# print("Frechet Distance:", frechet_dist)
 
 # extract test_file
 def test(file_path):
@@ -78,8 +78,8 @@ def test(file_path):
     ]
     return list_of_dicts
 
-dicts = test("/Users/tangzhiyan/Downloads/GeoProject/GeometryOfDataProject/Contours_GastropodShells.csv")
-print(frechet_distance(np.array(dicts[0]['coordinates']),np.array(dicts[27]['coordinates'])))
+# dicts = test("/Users/tangzhiyan/Downloads/GeoProject/GeometryOfDataProject/Contours_GastropodShells.csv")
+# print(frechet_distance(np.array(dicts[0]['coordinates']),np.array(dicts[27]['coordinates'])))
 
 
 
