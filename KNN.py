@@ -3,6 +3,7 @@ from sklearn.metrics import accuracy_score
 import pandas as pd
 from tqdm import tqdm
 import collections
+import os
 
 class KNN:
     def __init__(self,neighbor_num,task = "classification"):
@@ -44,7 +45,8 @@ class KNN:
         return self.predictions
 
 if __name__ == "__main__":
-    data = pd.read_csv("/Users/remark/Desktop/UVA/geometry of data/projects/GeometryOfDataProject/Contours_GastropodShells.csv")
+    os.chdir(os.path.abspath(os.path.dirname(__file__)))
+    data = pd.read_csv("Contours_GastropodShells.csv")
     prev_index = float("inf")
     coors = []
     labels = []
