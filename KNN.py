@@ -79,3 +79,29 @@ if __name__ == "__main__":
     pred = knn.predict(train_x,train_y,test_x)
     # print(pred)
     print("Accuracy of KNN is", accuracy_score(pred,test_y))
+
+class Node:
+    def __init__(self, point, left=None, right=None):
+        self.point = point
+        self.left = left
+        self.right = right
+
+class KDTree:
+    def __init__(self, points, depth=0):
+        if len(points) == 0:
+            self.root = None
+        else:
+            k = len(points[0])  # Assuming all points have the same dimensionality
+            axis = depth % k
+            sorted_points = sorted(points, key=lambda x: x[axis])
+            median = len(sorted_points) // 2
+
+            self.root = Node(sorted_points[median])
+            self.root.left = KDTree(sorted_points[:median], depth + 1)
+            self.root.right = KDTree(sorted_points[median + 1:], depth + 1)
+
+def inorder_traversal(node):    
+    if node:
+        inorder_traversal(node.left)
+        print(node.point)
+        inorder_traversal(node.right)
