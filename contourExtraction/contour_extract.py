@@ -13,7 +13,7 @@ def find_contours(image_path):
     _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 
     # Find contours
-    contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     return contours
 
 def process_dataset(data_dir):
