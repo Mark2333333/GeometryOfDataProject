@@ -1,6 +1,8 @@
 from scipy.spatial.distance import directed_hausdorff
 import pandas as pd
 import numpy as np
+from scipy.spatial.distance import cdist, euclidean
+from fastdtw import fastdtw
 
 class image_contour:
     contour_coord:[]
@@ -8,6 +10,7 @@ class image_contour:
     image_class:str
 
 
+#hausdorff_distance
 def modified_hausdorff_distance(coord_seq1, coord_seq2):
     max_distances = []
 
@@ -53,6 +56,7 @@ def c_frechet_distance(p, q, len_p, len_q, memo):
         )
     return memo[len_p, len_q]
 
+#frechet_distance
 def frechet_distance(p, q):
     len_p, len_q = len(p) - 1, len(q) - 1  # Adjust indices for 0-based indexing
     memo = np.full((len_p + 1, len_q + 1), -1.0)
@@ -64,6 +68,41 @@ def frechet_distance(p, q):
 
 # frechet_dist = frechet_distance(contour1, contour2)
 # print("Frechet Distance:", frechet_dist)
+
+#shape_context_distance
+def compute_shape_context(points, nbins_r, nbins_theta):
+        alpha=0.1
+        beta=1.0
+        r = np.sqrt(np.sum(points**2, axis=1))
+        theta = np.arctan2(points[:, 1], points[:, 0])
+        
+        log_r = np.logspace(0, np.log10(2), nbins_r)
+        log_theta = np.linspace(0, 2 * np.pi, nbins_theta)
+
+        context = np.zeros((nbins_r, nbins_theta), dtype=np.float)
+
+        for i in range(nbins_r):
+            for j in range(nbins_theta):
+                d_r = np.abs(r - log_r[i])
+                d_theta = np.abs(theta - log_theta[j])
+                context[i, j] = np.sum(np.exp(-alpha * d_r**2 - beta * d_theta**2))
+
+        return context / np.sum(context)
+
+#dtw_distance
+def dtw_distance(series1, series2):
+    x1, y1 = zip(*series1)
+    x2, y2 = zip(*series2)
+
+    distance_matrix = np.zeros((len(x1), len(x2)))
+
+    for i in range(len(x1)):
+        for j in range(len(x2)):
+            distance_matrix[i, j] = euclidean((x1[i], y1[i]), (x2[j], y2[j]))
+
+    _, dtw_dist = fastdtw(distance_matrix)
+
+    return dtw_dist
 
 # extract test_file
 def test(file_path):
