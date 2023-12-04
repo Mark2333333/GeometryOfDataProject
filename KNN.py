@@ -46,7 +46,7 @@ class KNN:
 
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
-    data = pd.read_csv("leaf_dataset2 (1).csv")
+    data = pd.read_csv("Contours_GastropodShells.csv")
     prev_index = float("inf")
     coors = []
     labels = []
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         if i.indexNumber != prev_index:
             prev_index = i.indexNumber
             coors.append([])
-            labels.append(i.speicesNumber)
+            labels.append(i.genusNumber)
         coors[-1].append((i.X,i.Y))
     print("================= Loading Data Ends =====================")
     threshold = 0.8
