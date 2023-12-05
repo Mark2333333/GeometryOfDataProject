@@ -13,7 +13,7 @@ def find_contours(image_path):
     _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 
     # Find contours
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     return contours
 
 def process_dataset(data_dir):
@@ -25,17 +25,20 @@ def process_dataset(data_dir):
         species_dir = os.path.join(data_dir, species_name)
         if os.path.isdir(species_dir):
             for image_file in os.listdir(species_dir):
+                # print(image_file)
+                if image_file[-3:] != "jpg":
+                    continue
                 image_path = os.path.join(species_dir, image_file)
                 contour = find_contours(image_path)
-                for con in contour:
-                    for p in con:
-                        # Extract x and y coordinates
-                        x, y = p.ravel()
-                        data.append([index_number, image_file, species_number,species_name, x, y])
+                for p in sorted(contour,key = lambda x:len(x))[-1][::20,::20,:]:
+                    # print(p)
+                # Extract x and y coordinates
+                    x, y = p.ravel()
+                    data.append([index_number, image_file, species_number,species_name, x, y])
                 index_number += 1
         species_number += 1
 
     # Create DataFrame and save to CSV
     df = pd.DataFrame(data, columns=['indexNumber', 'indexName', 'speicesNumber','speciesName', 'X', 'Y'])
-    df.to_csv('leaf_dataset2.csv', index=False)
+    df.to_csv('leaf_dataset5.csv', index=False)
 
