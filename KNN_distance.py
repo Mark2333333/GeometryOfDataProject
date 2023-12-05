@@ -2,7 +2,7 @@ from scipy.spatial.distance import directed_hausdorff
 import pandas as pd
 import numpy as np
 from scipy.spatial.distance import cdist, euclidean
-from fastdtw import fastdtw
+# from fastdtw import fastdtw
 
 class image_contour:
     contour_coord:[]

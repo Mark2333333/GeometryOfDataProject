@@ -4,6 +4,7 @@ import pandas as pd
 from tqdm import tqdm
 import collections
 import os
+from matplotlib import pyplot as plt
 
 class KNN:
     def __init__(self,neighbor_num,task = "classification"):
@@ -46,10 +47,17 @@ class KNN:
 
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
-    data = pd.read_csv("Contours_GastropodShells.csv")
+    data = pd.read_csv("leaf_dataset5 (2).csv")
+    # tmp = data[data["indexNumber"] == 2]
+    # plt.plot(tmp.X,tmp.Y)
+    # plt.show()
     prev_index = float("inf")
     coors = []
     labels = []
+    index_numbers = []
+    speciesNames = []
+    test_index_numbers = []
+    test_speciesNames = []
     # print(data.iloc[0])
     print("================= Loading Data Begins =====================")
     for i in tqdm(data.itertuples()):
@@ -57,7 +65,9 @@ if __name__ == "__main__":
         if i.indexNumber != prev_index:
             prev_index = i.indexNumber
             coors.append([])
-            labels.append(i.genusNumber)
+            index_numbers.append(i.indexNumber)
+            speciesNames.append(i.speciesName)
+            labels.append(i.speicesNumber)
         coors[-1].append((i.X,i.Y))
     print("================= Loading Data Ends =====================")
     threshold = 0.8
@@ -69,6 +79,8 @@ if __name__ == "__main__":
     for idx,label in tqdm(enumerate(labels)):
         threshold_couns[label] += 1
         if threshold_couns[label] > counter[label] * threshold:
+            test_index_numbers.append(index_numbers[idx])
+            test_speciesNames.append(speciesNames[idx])
             test_x.append(coors[idx])
             test_y.append(label)
         else:
@@ -77,6 +89,9 @@ if __name__ == "__main__":
     print("================= Splitting Data Ends =====================")
     knn = KNN(9)
     pred = knn.predict(train_x,train_y,test_x)
+    # print(({"indexNumber":index_numbers,"speciesName":speciesNames,"true_label":labels,"predict_label":pred}))
+    output = pd.DataFrame({"indexNumber":test_index_numbers,"speciesName":test_speciesNames,"true_label":test_y,"predict_label":pred})
+    output.to_csv("knn_prediction.csv",index=None)
     # print(pred)
     print("Accuracy of KNN is", accuracy_score(pred,test_y))
 
