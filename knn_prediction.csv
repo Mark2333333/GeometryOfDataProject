@@ -37,7 +37,7 @@ indexNumber,speciesName,true_label,predict_label
 215,Quercus,69,69
 216,Quercus,69,71
 217,Quercus,69,69
-218,Quercus,69,68
+218,Quercus,69,69
 219,Quercus,69,69
 220,Quercus,69,69
 221,Quercus,69,69
@@ -53,7 +53,7 @@ indexNumber,speciesName,true_label,predict_label
 291,Ulmus_carpinifolia,70,70
 292,Ulmus_carpinifolia,70,68
 293,Ulmus_carpinifolia,70,70
-294,Ulmus_carpinifolia,70,70
+294,Ulmus_carpinifolia,70,68
 295,Ulmus_carpinifolia,70,70
 296,Ulmus_carpinifolia,70,68
 297,Ulmus_carpinifolia,70,70

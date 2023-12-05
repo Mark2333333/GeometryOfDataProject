@@ -47,7 +47,7 @@ class KNN:
 
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
-    data = pd.read_csv("leaf_dataset5 (2).csv")
+    data = pd.read_csv("leaf_dataset6.csv")
     # tmp = data[data["indexNumber"] == 2]
     # plt.plot(tmp.X,tmp.Y)
     # plt.show()
@@ -87,13 +87,14 @@ if __name__ == "__main__":
             train_x.append(coors[idx])
             train_y.append(label)
     print("================= Splitting Data Ends =====================")
-    knn = KNN(9)
-    pred = knn.predict(train_x,train_y,test_x)
-    # print(({"indexNumber":index_numbers,"speciesName":speciesNames,"true_label":labels,"predict_label":pred}))
-    output = pd.DataFrame({"indexNumber":test_index_numbers,"speciesName":test_speciesNames,"true_label":test_y,"predict_label":pred})
-    output.to_csv("knn_prediction.csv",index=None)
-    # print(pred)
-    print("Accuracy of KNN is", accuracy_score(pred,test_y))
+    for kkk in [3,5,7,9,11,13]:
+        knn = KNN(kkk)
+        pred = knn.predict(train_x,train_y,test_x)
+        # print(({"indexNumber":index_numbers,"speciesName":speciesNames,"true_label":labels,"predict_label":pred}))
+        output = pd.DataFrame({"indexNumber":test_index_numbers,"speciesName":test_speciesNames,"true_label":test_y,"predict_label":pred})
+        output.to_csv("knn_prediction.csv",index=None)
+        # print(pred)
+        print("Accuracy of {} Nearest Neighbors is".format(knn.k), accuracy_score(pred,test_y))
 
 class Node:
     def __init__(self, point, left=None, right=None):
